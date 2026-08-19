@@ -201,11 +201,12 @@ packages:
   flutter_epub_viewer:
     dependency: "direct main"
     description:
-      name: flutter_epub_viewer
-      sha256: "39d8ff469700fea41f103ae1ec01e06c805c3602eef0fecb1c5b325688dcb5b2"
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.2.8"
+      path: "."
+      ref: HEAD
+      resolved-ref: "82ee120613cc4a1832cb3cd8c268be952a484f92"
+      url: "https://github.com/athulkammath/epub_viewer.git"
+    source: git
+    version: "2.0.0"
   flutter_html:
     dependency: "direct main"
     description:
