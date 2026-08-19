@@ -36,7 +36,7 @@ class _EbookReaderPageState extends ConsumerState<EbookReaderPage>
     super.initState();
     _controller = EpubController();
     _epubSource = widget.assetPath.startsWith('/')
-        ? EpubSource.fromFile(io.File(widget.assetPath))
+        ? EpubSource.fromData(io.File(widget.assetPath).readAsBytesSync())
         : EpubSource.fromAsset(widget.assetPath);
     _drawerTabController = TabController(length: 3, vsync: this);
     _ttsService.onSpeechStateChanged = (speaking) {
