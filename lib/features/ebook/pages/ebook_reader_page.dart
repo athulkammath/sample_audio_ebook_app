@@ -19,6 +19,7 @@ class EbookReaderPage extends ConsumerStatefulWidget {
 class _EbookReaderPageState extends ConsumerState<EbookReaderPage>
     with SingleTickerProviderStateMixin {
   late EpubController _controller;
+  late EpubSource _epubSource;
   final TtsService _ttsService = TtsService();
   late TabController _drawerTabController;
   EpubMetadata? _bookMetadata;
@@ -34,6 +35,9 @@ class _EbookReaderPageState extends ConsumerState<EbookReaderPage>
   void initState() {
     super.initState();
     _controller = EpubController();
+    _epubSource = widget.assetPath.startsWith('/')
+        ? EpubSource.fromFile(io.File(widget.assetPath))
+        : EpubSource.fromAsset(widget.assetPath);
     _drawerTabController = TabController(length: 3, vsync: this);
     _ttsService.onSpeechStateChanged = (speaking) {
       _isSpeakingNotifier.value = speaking;
@@ -805,11 +809,7 @@ class _EbookReaderPageState extends ConsumerState<EbookReaderPage>
                 child: EpubViewer(
                   key: ValueKey('$fSize-$fFamily-${preset.name}-${flow.name}'),
                   epubController: _controller,
-                  epubSource: widget.assetPath.startsWith('/')
-                      ? EpubSource.fromData(
-                          io.File(widget.assetPath).readAsBytesSync(),
-                        )
-                      : EpubSource.fromAsset(widget.assetPath),
+                  epubSource: _epubSource,
                   suppressNativeContextMenu: true,
                   initialCfi: _initialCfi,
                   onTouchDown: (x, y) {
